@@ -1,0 +1,49 @@
+	<project name="DynamicDeploy" default="deploy" basedir=".">
+	
+	<!-- Load Jenkins environment -->
+    <property environment="env"/>
+    <property name="target.env" value="${env.TARGET_ENV}"/>
+	<property name="target.passphrase" value="${env.PASSPHRASE}"/>
+	
+	<!-- Validate environment -->
+    <fail message="No environment selected. Aborting." if="target.env" unless="target.env"/>
+    <condition property="is.valid.env">
+        <or>
+            <equals arg1="${target.env}" arg2="sandbox"/>
+            <equals arg1="${target.env}" arg2="prod"/>
+        </or>
+    </condition>
+    <fail message="Invalid environment: '${target.env}'" unless="is.valid.env"/>
+	
+	<!-- Load environment-specific config -->
+    <target name="load-config">
+        <echo message="Loading config for ${target.env}"/>
+        <property file="env-properties/${target.env}.properties"/>
+    </target>
+	
+    <!-- Upload artifact via native scp -->
+    <target name="upload-artifact" depends="load-config">
+        <echo message="Uploading ${artifact.path} to ${target.user}@${target.host}:${remote.deploy.path} ${target.passphrase}"/>
+		<exec executable="bash">
+			<arg line="-c 'eval $(ssh-agent -s) &amp;&amp; echo ${target.passphrase} | ssh-add ${target.key} &amp;&amp; scp ${artifact.path} ${target.user}@${target.host}:${remote.deploy.path}'" />
+		</exec>		
+		<echo message="Uploading finish on remote deployment:${remote.deploy.path}"/>
+    </target>  
+
+    <!-- Restart tomcat using native ssh -->
+  <!--  <target name="restart-tomcat" depends="upload-artifact">
+        <echo message="Restarting Tomcat on ${target.host}"/>
+        <exec executable="ssh" failonerror="true">
+            <arg value="-i"/>
+            <arg value="${ssh.key}"/>
+            <arg value="${ssh.user}@${target.host}"/>
+            <arg value="sudo systemctl restart tomcat"/>
+        </exec>
+    </target>  -->
+
+    <!-- Combined deploy target -->
+    <target name="deploy" depends="upload-artifact"> 
+        <echo message="Deployment to ${target.env} completed."/>
+    </target>
+
+</project>
