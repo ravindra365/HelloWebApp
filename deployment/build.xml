@@ -3,7 +3,7 @@
 	<!-- Load Jenkins environment -->
     <property environment="env"/>
     <property name="target.env" value="${env.TARGET_ENV}"/>
-	<property name="target.passphrase" value="${env.PASSPHRASE}"/>
+	<!-- <property name="target.passphrase" value="${env.PASSPHRASE}"/> -->
 	
 	<!-- Validate environment -->
     <fail message="No environment selected. Aborting." if="target.env" unless="target.env"/>
