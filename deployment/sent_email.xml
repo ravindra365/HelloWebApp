@@ -1,0 +1,44 @@
+<project name="SendConsoleLog" default="prepare-and-send" basedir=".">
+
+    <!-- SMTP and Email Properties -->
+    <property name="mail.smtp.host" value="smtp.gmail.com"/>
+    <property name="mail.smtp.port" value="587"/>
+    <property name="mail.user" value="yonna.011990@gmail.com"/>
+    <property name="mail.password" value="vzgptqnyzvmfaszx"/>
+
+    <!-- Jenkins environment variables (passed from Jenkins or defined manually) -->
+    <property environment="env"/>
+    <property name="job.name" value="${env.JOB_NAME}"/>
+    <property name="build.number" value="${env.BUILD_NUMBER}"/>
+    <property name="jenkins.home" value="${env.JENKINS_HOME}"/>
+    
+    <!-- Source and Target -->
+    <property name="jenkins.log.path" 
+              value="${jenkins.home}/jobs/${job.name}/builds/${build.number}/log"/>
+    <property name="local.log.path" value="console.log"/>
+
+    <!-- Copy log file -->
+    <target name="copy-log">
+        <copy file="${jenkins.log.path}" tofile="${local.log.path}" failonerror="true"/>
+    </target>
+
+    <!-- Send Email -->
+    <target name="send-email" depends="copy-log">
+        <mail mailhost="${mail.smtp.host}" mailport="${mail.smtp.port}"
+              user="${mail.user}" password="${mail.password}"
+              ssl="no" tls="yes" subject="Jenkins Build Console Log: ${job.name} #${build.number}"
+              from="${mail.user}" tolist="receiver@example.com">
+
+            <message>
+                Jenkins build ${job.name} #${build.number} completed. Please find the console output attached.
+            </message>
+
+            <attachments>
+                <fileset dir="${basedir}">
+                    <include name="console.log"/>
+                </fileset>
+            </attachments>
+        </mail>
+    </target>
+
+</project>
