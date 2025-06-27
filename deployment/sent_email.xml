@@ -2,7 +2,7 @@
 
     <!-- SMTP and Email Properties -->
     <property name="mail.smtp.host" value="smtp.gmail.com"/>
-    <property name="mail.smtp.port" value="587"/>
+    <property name="mail.smtp.port" value="465"/>
     <property name="mail.user" value="yonna.011990@gmail.com"/>
     <property name="mail.password" value="vzgptqnyzvmfaszx"/>
 
@@ -26,7 +26,7 @@
     <target name="send-email" depends="copy-log">
         <mail mailhost="${mail.smtp.host}" mailport="${mail.smtp.port}"
               user="${mail.user}" password="${mail.password}"
-              ssl="no" tls="yes" subject="Jenkins Build Console Log: ${job.name} #${build.number}"
+              ssl="yes" tls="no" subject="Jenkins Build Console Log: ${job.name} #${build.number}"
               from="${mail.user}" tolist="receiver@example.com">
 
             <message>
