@@ -1,4 +1,4 @@
-<project name="SendConsoleLog" default="prepare-and-send" basedir=".">
+<project name="SendConsoleLog" default="send-email" basedir=".">
 
     <!-- SMTP and Email Properties -->
     <property name="mail.smtp.host" value="smtp.gmail.com"/>
