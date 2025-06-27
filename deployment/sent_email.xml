@@ -20,9 +20,6 @@
     <!-- Copy log file -->
     <target name="copy-log">
         <copy file="${jenkins.log.path}" tofile="${local.log.path}" failonerror="true"/>
-		<echo> ${jenkins.log.path}</echo>
-		<echo> hello </echo>
-		<echo> ${local.log.path}</echo>
     </target>
 
     <!-- Send Email -->
@@ -35,13 +32,11 @@
             <message>
                 Jenkins build ${job.name} #${build.number} completed. Please find the console output attached.
             </message>
-
             <attachments>
                 <fileset dir="${basedir}">
-					<echo> ${basedir} </echo>
                     <include name="console.log"/>
                 </fileset>
-            </attachments>
+           </attachments>
         </mail>
     </target>
 
