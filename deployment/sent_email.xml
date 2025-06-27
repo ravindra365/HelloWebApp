@@ -20,13 +20,14 @@
     <!-- Copy log file -->
     <target name="copy-log">
         <copy file="${jenkins.log.path}" tofile="${local.log.path}" failonerror="true"/>
+		<echo> ${jenkins.log.path}-${local.log.path}</echo>
     </target>
 
     <!-- Send Email -->
     <target name="send-email" depends="copy-log">
         <mail mailhost="${mail.smtp.host}" mailport="${mail.smtp.port}"
               user="${mail.user}" password="${mail.password}"
-              ssl="yes" tls="no" subject="Jenkins Build Console Log: ${job.name} #${build.number}"
+              ssl="yes" subject="Jenkins Build Console Log: ${job.name} #${build.number}"
               from="${mail.user}" tolist="receiver@example.com">
 
             <message>
