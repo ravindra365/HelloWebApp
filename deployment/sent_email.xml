@@ -20,7 +20,9 @@
     <!-- Copy log file -->
     <target name="copy-log">
         <copy file="${jenkins.log.path}" tofile="${local.log.path}" failonerror="true"/>
-		<echo> ${jenkins.log.path}-${local.log.path}</echo>
+		<echo> ${jenkins.log.path}</echo>
+		<message> heloo </message>
+		<echo> ${local.log.path}</echo>
     </target>
 
     <!-- Send Email -->
@@ -36,6 +38,7 @@
 
             <attachments>
                 <fileset dir="${basedir}">
+					<echo> ${basedir} </echo>
                     <include name="console.log"/>
                 </fileset>
             </attachments>
