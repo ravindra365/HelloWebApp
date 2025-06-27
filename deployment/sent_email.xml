@@ -21,7 +21,7 @@
     <target name="copy-log">
         <copy file="${jenkins.log.path}" tofile="${local.log.path}" failonerror="true"/>
 		<echo> ${jenkins.log.path}</echo>
-		<message> heloo </message>
+		<echo> hello </echo>
 		<echo> ${local.log.path}</echo>
     </target>
 
