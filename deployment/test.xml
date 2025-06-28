@@ -3,8 +3,7 @@
     <!-- Step 1: Classpath for Jakarta Mail and Activation -->
     <path id="mail.classpath">
         <fileset dir="/var/lib/jenkins/workspace/HelloWorld/deployment/lib">
-            <include name="jakarta.mail-1.6.7.1.jar"/>
-            <include name="jakarta.activation-1.2.2.jar"/>
+            <include name="*.jar"/>
         </fileset>
     </path>
 
