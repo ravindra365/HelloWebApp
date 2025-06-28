@@ -1,0 +1,43 @@
+<project name="SendEmail" default="send-email" basedir=".">
+
+    <!-- Step 1: Classpath for Jakarta Mail and Activation -->
+    <path id="mail.classpath">
+        <fileset dir="lib">
+            <include name="jakarta.mail-1.6.7.1.jar"/>
+            <include name="jakarta.activation-1.2.2.jar"/>
+        </fileset>
+    </path>
+
+    <!-- Step 2: Register mail task -->
+    <taskdef name="mail"
+             classname="org.apache.tools.ant.taskdefs.email.EmailTask"
+             classpathref="mail.classpath"/>
+
+    <!-- Step 3: SMTP Settings -->
+    <property name="mail.smtp.host" value="smtp.gmail.com"/>
+    <property name="mail.smtp.port" value="465"/>
+    <property name="mail.user" value="your_email@gmail.com"/>
+    <property name="mail.password" value="your_app_password"/> <!-- Not Gmail login password -->
+
+    <!-- Step 4: Send Email -->
+    <target name="send-email">
+        <mail mailhost="${mail.smtp.host}"
+              mailport="${mail.smtp.port}"
+              user="${mail.user}"
+              password="${mail.password}"
+              ssl="true"
+              subject="Ant Build Console Log Email"
+              from="${mail.user}"
+              tolist="receiver@example.com">
+            <message>
+                This is a test email sent via Apache Ant with Jakarta Mail and Activation.
+            </message>
+            <attachments>
+                <fileset dir="${basedir}">
+                    <include name="console.log"/>
+                </fileset>
+            </attachments>
+        </mail>
+    </target>
+
+</project>
