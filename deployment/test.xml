@@ -1,42 +1,31 @@
-<project name="SendEmail" default="send-email" basedir=".">
+<project name="SendMail" default="send-email" basedir="." xmlns:mail="antlib:org.apache.tools.ant.taskdefs.email">
 
-    <!-- Step 1: Classpath for Jakarta Mail and Activation -->
+    <!-- Define classpath -->
     <path id="mail.classpath">
         <fileset dir="/var/lib/jenkins/workspace/HelloWorld/deployment/lib">
-            <include name="*.jar"/>
+            <include name="**/*.jar"/>
         </fileset>
     </path>
 
-    <!-- Step 2: Register mail task -->
-    <taskdef name="mail"
-             classname="org.apache.tools.ant.taskdefs.email.EmailTask"
-             classpathref="mail.classpath"/>
+    <!-- Register mail task -->
+    <taskdef name="mail" classname="org.apache.tools.ant.taskdefs.email.EmailTask" classpathref="mail.classpath"/>
 
-    <!-- Step 3: SMTP Settings -->
-    <property name="mail.smtp.host" value="smtp.gmail.com"/>
-    <property name="mail.smtp.port" value="465"/>
-    <property name="mail.user" value="your_email@gmail.com"/>
-    <property name="mail.password" value="your_app_password"/> <!-- Not Gmail login password -->
-
-    <!-- Step 4: Send Email -->
+    <!-- Target to send mail -->
     <target name="send-email">
-        <mail mailhost="${mail.smtp.host}"
-              mailport="${mail.smtp.port}"
-              user="${mail.user}"
-              password="${mail.password}"
+        <mail mailhost="smtp.gmail.com"
+              mailport="465"
               ssl="true"
-              subject="Ant Build Console Log Email"
-              from="${mail.user}"
-              tolist="receiver@example.com">
-            <message>
-                This is a test email sent via Apache Ant with Jakarta Mail and Activation.
-            </message>
+              user="yonna.011990@gmail.com"
+              password="vzgptqnyzvmfaszx"
+              from="yonna.011990@gmail.com"
+              tolist="yonna.011990@gmail.com"
+              subject="Build Log Attachment"
+              message="Here is the attached build log.">
             <attachments>
                 <fileset dir="${basedir}">
-                    <include name="console.log"/>
+                    <include name="build.log"/>
                 </fileset>
             </attachments>
         </mail>
     </target>
-
 </project>
