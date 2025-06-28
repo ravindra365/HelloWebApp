@@ -41,7 +41,6 @@
     <!-- Combined deploy target -->
     <target name="deploy" depends="upload-artifact"> 
         <echo message="Deployment to ${target.env} completed."/>
-		<antcall target="copy-log"/>
     </target>
 	
     <!-- Copy log file -->
