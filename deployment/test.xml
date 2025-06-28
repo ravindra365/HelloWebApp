@@ -21,11 +21,11 @@
               tolist="yonna.011990@gmail.com"
               subject="Build Log Attachment"
               message="Here is the attached build log.">
-            <attachments>
+          <!--  <attachments>
                 <fileset dir="${basedir}">
                     <include name="build.log"/>
                 </fileset>
-            </attachments>
+            </attachments> -->
         </mail>
     </target>
 </project>
