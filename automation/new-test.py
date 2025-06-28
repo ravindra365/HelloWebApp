@@ -24,7 +24,7 @@ class TestNewTest:
         print(">>> Starting test")
         self.driver.set_page_load_timeout(10)
         try:
-            self.driver.get("http://51.94.68.21:8081/HelloWebApp/")
+            self.driver.get("http://51.94.68.217:8081/HelloWebApp/")
             print(">>> Page loaded")
             page_source = self.driver.page_source
             print(">>> Page Source Length:", len(page_source))
