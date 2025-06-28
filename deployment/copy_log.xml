@@ -1,15 +1,16 @@
-<project name="DynamicDeploy" default="copy-log" basedir=".">
+<project name="CopyLog" default="copy-log" basedir=".">
 
-    <property name="job.name" value="${env.JOB_NAME}"/>
+    <property environment="env"/>
+	<property name="job.name" value="${env.JOB_NAME}"/>
     <property name="build.number" value="${env.BUILD_NUMBER}"/>
     <property name="jenkins.home" value="${env.JENKINS_HOME}"/>
 
-    <property name="jenkins.log.path" 
-              value="${jenkins.home}/jobs/${job.name}/builds/${build.number}/log"/>
+    <property name="jenkins.log.path" value="${jenkins.home}/jobs/${job.name}/builds/${build.number}/log"/>
     <property name="local.log.path" value="console.log"/>
 	
 	<!-- Copy log file -->
     <target name="copy-log">
         <copy file="${jenkins.log.path}" tofile="${local.log.path}" failonerror="true"/>
+		<echo> file copied successfully</echo>
     </target>
 </project>
