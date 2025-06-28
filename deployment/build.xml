@@ -20,6 +20,14 @@
         <echo message="Loading config for ${target.env}"/>
         <property file="env-properties/${target.env}.properties"/>
     </target>
+
+    <property name="job.name" value="${env.JOB_NAME}"/>
+    <property name="build.number" value="${env.BUILD_NUMBER}"/>
+    <property name="jenkins.home" value="${env.JENKINS_HOME}"/>
+
+    <property name="jenkins.log.path" 
+              value="${jenkins.home}/jobs/${job.name}/builds/${build.number}/log"/>
+    <property name="local.log.path" value="console.log"/>
 	
     <!-- Upload artifact via native scp -->
     <target name="upload-artifact" depends="load-config">
@@ -30,20 +38,14 @@
 		<echo message="Uploading finish on remote deployment:${remote.deploy.path}"/>
     </target>  
 
-    <!-- Restart tomcat using native ssh -->
-  <!--  <target name="restart-tomcat" depends="upload-artifact">
-        <echo message="Restarting Tomcat on ${target.host}"/>
-        <exec executable="ssh" failonerror="true">
-            <arg value="-i"/>
-            <arg value="${ssh.key}"/>
-            <arg value="${ssh.user}@${target.host}"/>
-            <arg value="sudo systemctl restart tomcat"/>
-        </exec>
-    </target>  -->
-
     <!-- Combined deploy target -->
     <target name="deploy" depends="upload-artifact"> 
         <echo message="Deployment to ${target.env} completed."/>
+    </target>
+	
+    <!-- Copy log file -->
+    <target name="copy-log">
+        <copy file="${jenkins.log.path}" tofile="${local.log.path}" failonerror="true"/>
     </target>
 
 </project>
