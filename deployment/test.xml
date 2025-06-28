@@ -1,4 +1,4 @@
-<project name="SendMail" default="send-email" basedir="." xmlns:mail="antlib:org.apache.tools.ant.taskdefs.email">
+<project name="SendMail" default="send-email" basedir="." >
 
     <!-- Define classpath -->
     <path id="mail.classpath">
@@ -7,25 +7,18 @@
         </fileset>
     </path>
 
-    <!-- Register mail task -->
-    <taskdef name="mail" classname="org.apache.tools.ant.taskdefs.email.EmailTask" classpathref="mail.classpath"/>
-
     <!-- Target to send mail -->
     <target name="send-email">
-        <mail mailhost="smtp.gmail.com"
-              mailport="465"
-              ssl="true"
-              user="yonna.011990@gmail.com"
-              password="vzgptqnyzvmfaszx"
-              from="yonna.011990@gmail.com"
-              tolist="yonna.011990@gmail.com"
-              subject="Build Log Attachment"
-              message="Here is the attached build log.">
-          <!--  <attachments>
-                <fileset dir="${basedir}">
-                    <include name="build.log"/>
-                </fileset>
-            </attachments> -->
-        </mail>
+	<mail mailhost="smtp.gmail.com" mailport="465" subject="Test build">
+	<from address="yonna.011990@gmail.com"/>
+	<replyto address="yonna.011990@gmail.com"/>
+	<to address="yonna.011990@gmail.com"/>
+	<message>The ${buildname} nightly build has completed</message>
+	<!-- <attachments>
+		<fileset dir="dist">
+		<include name="**/*.zip"/>
+		</fileset>
+	</attachments>  -->
+</mail>
     </target>
 </project>
